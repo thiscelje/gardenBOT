@@ -304,7 +304,7 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "mistralai/Mistral-Small-3.2-24B-Instruct-2506",
+        model: "openai/gpt-3.5-turbo",
         messages: [
           {
             role: "system",
