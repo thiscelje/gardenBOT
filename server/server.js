@@ -389,7 +389,7 @@ app.listen(PORT, () => {
   console.log(
     `🌍 Buka API di URL: ${
       process.env.NODE_ENV === "production"
-        ? "https://gardenbot-production.up.railway.app"
+        ? "https://gardenbot-production-b588.up.railway.app/"
         : `http://localhost:${PORT}`
     }`
   );

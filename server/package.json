@@ -33,8 +33,5 @@
     "express-backend",
     "firebase",
     "nodejs"
-  ],
-  "engines": {
-    "node": ">=18.0.0"
-  }
+  ]
 }
