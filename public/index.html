@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tanaman Bicara | GardenBot AI</title>
+    <link rel="stylesheet" href="style.css" />
+    <script defer src="script.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+  <body class="theme-nature">
+    <!-- HEADER & NAVIGATION -->
+    <header class="header">
+      <nav class="nav container">
+        <div class="logo">🌿 GardenBot AI</div>
+        <ul class="nav-links">
+          <li><a href="#">Beranda</a></li>
+          <li><a href="#fitur">Fitur</a></li>
+          <li><a href="#tentang">Tentang</a></li>
+          <li><a href="#kontak">Kontak</a></li>
+        </ul>
+        <button class="theme-toggle" aria-label="Ganti tema">🌓</button>
+      </nav>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero container">
+      <div class="hero-text">
+        <h1><span>Rawat</span> Tanamanmu dengan Kecerdasan Buatan</h1>
+        <p>
+          Pantau, pahami, dan ngobrol langsung dengan tanamanmu. Ditenagai oleh
+          sensor dan AI real-time.
+        </p>
+        <a href="#chat" class="cta-button">Mulai Sekarang</a>
+      </div>
+      <div class="hero-image">
+        <img src="/assets/f03f135e-51f2-48d0-95d6-043ef9e9f2ee.png" alt="Tanaman AI" />
+      </div>
+    </section>
+
+    <!-- FITUR UTAMA -->
+    <section id="fitur" class="features container">
+      <h2>Fitur Unggulan</h2>
+      <div class="feature-grid">
+        <div class="feature-card">
+          <h3>Sensor Kelembaban</h3>
+          <p>Mendeteksi kadar air tanah secara real-time.</p>
+        </div>
+        <div class="feature-card">
+          <h3>AI Chatbot Tanaman</h3>
+          <p>Tanamanmu bisa bicara! Chat dan pahami kebutuhannya.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Monitoring Suhu</h3>
+          <p>Cek suhu sekitar yang mempengaruhi pertumbuhan tanaman.</p>
+        </div>
+        <div class="feature-card">
+          <h3>Otomasi Penyiraman</h3>
+          <p>Atur penyiraman otomatis berbasis data dan AI.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHATBOT SECTION -->
+    <section id="chat" class="chatbot container">
+      <h2>Tanamanmu Ingin Bicara 🌱</h2>
+      <div class="chat-window" id="chat-window"></div>
+      </div>
+        <input type="text" placeholder="Tanya sesuatu..." class="chat-input" id="chat-input" />
+        <button id="send-btn">Kirim</button>
+        <button id="delete-chat" class="cta-button" style="margin-top: 1rem;">🗑️ Hapus Chat</button>
+      <div class="export-buttons">
+        <h3>📥 Ekspor Data</h3>
+        <button id="export-chat-json">Ekspor Chat (.json)</button>
+        <button id="export-chat-txt">Ekspor Chat (.txt)</button>
+        <button id="export-sensor-json">Ekspor Sensor (.json)</button>
+        <button id="export-sensor-txt">Ekspor Sensor (.txt)</button>
+      </div>
+    </section>
+
+    <section id="statistik" class="statistik container">
+      <h2>📈 Statistik Tanaman</h2>
+      <canvas id="sensorChart" height="200"></canvas>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+      <div class="footer-content container">
+        <p>© 2025 GardenBot AI. Didesain untuk riset dan cinta tanaman.</p>
+        <div class="footer-links">
+          <a href="#">Tentang</a>
+          <a href="#kontak">Kontak</a>
+          <a href="#">GitHub</a>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>
