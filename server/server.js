@@ -384,9 +384,15 @@ setInterval(() => {
   logSensor();
 }, 1000);
 
-// Jalankan server
 app.listen(PORT, () => {
-  console.log(`✅ Server berjalan di http://localhost:${PORT}`);
+  console.log(`✅ Server berjalan di PORT ${PORT}`);
+  console.log(
+    `🌍 Buka API di URL: ${
+      process.env.NODE_ENV === "production"
+        ? "https://gardenbot-production.up.railway.app"
+        : `http://localhost:${PORT}`
+    }`
+  );
 });
 
 // Logging data sensor ke /sensor_log
