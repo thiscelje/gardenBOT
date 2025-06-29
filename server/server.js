@@ -40,7 +40,7 @@ admin.initializeApp({
 
 const db = admin.database();
 
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 
 if (!OPENROUTER_API_KEY) {
   console.error("🚨 OPENROUTER_API_KEY tidak ditemukan di environment!");
