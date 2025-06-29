@@ -1,3 +1,5 @@
+// 🌱 GardenBot AI Backend
+
 if (process.env.NODE_ENV !== "production") {
   require("dotenv").config();
 }
@@ -16,7 +18,6 @@ const PORT = process.env.PORT || 3000;
 
 app.use(cors());
 app.use(bodyParser.json({ limit: "10mb" }));
-
 app.use(express.static(path.join(__dirname, "../public")));
 
 admin.initializeApp({
@@ -24,8 +25,7 @@ admin.initializeApp({
     type: "service_account",
     project_id: "iot-script",
     private_key_id: "b1235fa30eea559e0783c947e535acb30c104e27",
-    private_key:
-      "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQDLZXNQB/+7c6PN\na3P+hB9/TjdziLJC8CjYP07UHYgNlqk0z7HDdFlXFbC2+j5VIsHDmDGw4AwlYJuj\n1eM9msRw8OBTeNNzsqXYSk9Bb5bVr+AunjRkt5+oL3VcbV2OWfks8RYx9p4LM1sw\nFZkCWTRErL+vL8w/u/C5aSL3gwOZ68O6vf93skPndyfTKdpLD96xZu6LEwO95a51\nVsEiLrHABbpLskKiKVd6eQ+SGWvSSYbL0xrg47PDRn+n7HxEDD6UodgJTPYd/z9y\nou0IUC6ZWnd24BUzwplajCs8Fom3NHiLekwYiZ0eod+rQ+ll778ye+JpoIL+E0VW\nLikPu66TAgMBAAECggEABz6Zz7Y5OZ7frQMeNNaMeKcyQ5F+3s3HCzp6mpb0+QuA\nujqJTl16ikuGVz4ajbErO1hCHx/SqltLr+CAIUNQPQopoQZZ2JbWFxocMJELy3QY\nzllp7FNOAsggPpQ/yomkJv0RmVBEj64kB5+PmMQaVsfb0tWVAEAlckd4Y142r8Qt\nGhV9jVD8XEAlMaob7dahJjMl65ki9vlmVoA04wlBstYJ3eLnq+5n6ngmtpMHPqrY\nFcjfhVy9bfCKjS+N8Df2gFbvNE3Ckx792HhcOPa2maPVLhTYz7m0EHplqPm0oYDx\n7hL7BskLZ3OHtCZfMI3lq/KppH7oT0Djv3t7or1rwQKBgQD7p72XC0JC7j9t+81L\n8R5SJvQDU6Kw02j9z40Puoqm/k03YDx8XZxPBih6dnWFpUUoBwyZkCc20siMFRhP\nvpc7jFxlTBnsuPLzOn3eT4VmmUHD8OB6gANJ0AWWtwgRaHBN10aoYUYmz+aLxleV\n7+RrJE9dOi57xf8x+rWxVW5RSQKBgQDO6GqLlgWI0//7EYgPpE0Hx/ThM6ghhW0B\nH+ZmSTMYiJiZTPMw3mymeHGKqCO7H/DkTvqwoq2EeqXBL9UltyHtwSxeRHUGKif0\nKq4JgCGf6qXVl9MbHACSS1Y3ZptMJoxkNzQ1SeZI8akvFJL4hZeWJ/TiZxjjYu/2\nfTUyLD4c+wKBgBuSCQdfSGckyvY1vAwx4myFr/4dT5mnz7ze3El42m/pNHR4qqfF\nabaOqiigiceWj7kO7KZ2UJWFCkuuk/dInjD787N1XvG8YYGcSuXsOGVBLR9WaIGD\nPNj9XV9hthSSKJueljMkVRczd8KgfEAFBDVoyPkhwq30xzymhvlirq9hAoGAMCo6\nYzQRJcD0HeX+3mVI6T7K6oGz6dm9fj2GzNjNZDCoFUesdPvSHw56n+R0LONKmFsq\nUGQOMIC8hTQ1UgpHg6ksQuV8uGqn0lb9HIkPSsK8x/QH2I+0MloHP+5KyHdQxyNy\nq9UAHori72rCq8etee7jOrD1QjmN0rti3sMd0nECgYEA83FpZnuzjneL7pJKPeUE\nD5CfytCeoxbBEdv986D1rIGLpxvUmfPa7Wo1b9uljACxeLfR275BpppeqBz2i2LE\ncFUK2u2/mA5XyHmNxtqlAFZpmj4immAZ4+O2FT/0AMimni1Wo7EuQlePMM01PiWb\nVBLyGjtRiIFk5Oyj0Har+dA=\n-----END PRIVATE KEY-----\n",
+    private_key: process.env.FIREBASE_PRIVATE_KEY?.replace(/\\n/g, "\n"),
     client_email: "firebase-adminsdk-fbsvc@iot-script.iam.gserviceaccount.com",
     client_id: "116790051579104997219",
     auth_uri: "https://accounts.google.com/o/oauth2/auth",
@@ -40,15 +40,15 @@ admin.initializeApp({
 
 const db = admin.database();
 
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+const METEOSOURCE_API_KEY = process.env.METEOSOURCE_API_KEY;
+const PLANT_ID_API_KEY = process.env.PLANT_ID_API_KEY;
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 if (!OPENROUTER_API_KEY) {
   console.error("🚨 OPENROUTER_API_KEY tidak ditemukan di environment!");
   process.exit(1);
 }
-const METEOSOURCE_API_KEY = "yij0lyx50eawvv0xmhlvnlyhwkpqcrts5ba10eu0";
-const PLANT_ID_API_KEY = "uOJZIIeQFn5LmINNQEYyRtqdvlXQw8Trij9vVCE5wSEiXcKizN";
-const IMGUR_CLIENT_ID = "8c94fe93a60ae08";
 
 console.log("🔑 ENV OPENROUTER_API_KEY:", process.env.OPENROUTER_API_KEY);
 
