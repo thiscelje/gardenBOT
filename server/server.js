@@ -8,7 +8,6 @@ const fs = require("fs");
 const path = require("path");
 require("dotenv").config();
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
@@ -19,18 +18,20 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 admin.initializeApp({
   credential: admin.credential.cert({
-  "type": "service_account",
-  "project_id": "iot-script",
-  "private_key_id": "205510c39ba51ea4358e331fa452cef639e2df1a",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDEMBmp4d/Cu/O3\ndzVty5Io0hlId7gZppIK/r7ip9wS4GVsPhXma6uZ9CNL8Hoj+Dwe250ASF7Er6Eu\nqdsm4r8X8Ad958plQrpBY1o/DHQKdCQOc26gf4+T1qHa0pFgORSARGfa8nGXQglX\nzcF14rHKB522GKW+aXmwUGi3noI6vGl/K08EsssuL5aQVRk/YUfb3M75Vqmsp0zM\nYdbz3SHI87FtgCh+Wg2R9I9pMN01J7BkPfmUhmEUvCeujotqq0RIVs2Qsq5mJICR\neZZuXqiRi4mF4qFKB44IRDvpPGlyf2cC6xg/sFTD6hA+RWO+afKR9N9UyVCQYlZM\nP8p7y8gDAgMBAAECggEADF2M9Vh8Wx18l+o5rsdsP9cD0YqWMUVLiPzgePaKi15w\nYt+qgrQm0NScXh6nz1kuKBjzrtjHSSjzhRzrzrbvXRAu1xoDREAHiRqJgO+e54/F\nbzgjipZi4GpG5L0HFuQ4ht/vSdOkVc7+oFwI69sgSJl6Fvs7t+77xNSn0Db7gopQ\n6QDfA45ZxAE8KxrX4ksP+WNgPOVtuoLoXO71CKoVWP5Ro++9dyIWGfvSXqv48pe/\nsss8cD0//E+tA4Ekv4nzlZXnLVoHn5/X4g0SXv7dJObh9CfwPtYWZ17MFA6OWYYm\nlMK0eQ0D74oegWms9r8CgzBnXUvir5+xlwUj/Aiy9QKBgQD+qIkB/aSECODitnJK\nbh/T1EKsq3bn5OIB2ii635RMW82djuHFl5zdvwivAhCKkx/VE8gD4Gymy4JYYA4Y\n2STVI6Yx5DWM3YkZ/rLaRKoOunwacZilZN+nOoc/MlLLOTwuKrH1fY5Do8/2KNmc\ndJWTpucN1XwqA5WMT78OflFVxQKBgQDFOLRPS04HvFcjlVQa4hqSeZCTapuTpmBW\nTbvsGmNSMIoPStvzwDl85EKzP48O9vFcPo9t8umweLtl3Rit+PlI49vQK10Pe6/z\nfHZAwRIrFJ5NJUOxg6xjoUvBgafE7aQFOy3yfR/qzYkXDqxQf+eEdNxKdCx8EytM\ny8nlP5tLJwKBgFHWTXlDTsxTohmZci8zJq1HaEnfLG4nYu4fcrljQmArnG9GzI1Y\nRMQKMTs0maY+05sBKWT9iU0s122ZKM6ZcbnBJBaidQcY5odhD48PQ+tJyLoiyWBV\ng35VU8NeY7cFZK6db+UpfT+FdD5yMESUPsFdgKE0extxXWzi784zj+XVAoGBAIei\nAqcRw/0f8tGe7fN7EgkwH1SymYIGhvRzi0zJrQqmJRx1QCU3SpHwrUp26JzDCaSF\nxcA4saxSq5ZXYpSqyE3vnolgeSSfzJboPq8z2JnWGTQ274ISayktkVroHwgY4pdS\nZrwAf0XMyn4X8jt+ays17xYpJTrDOCEdeaD2iIc7AoGBAMuzrzvLeyJURP1X/Y9E\niB9TFSPKLQqu9/T3ff0eV2NB6mmmsqpWpVi+jo5dzsQBZSXZeYPZGGt7Rg7fLXkh\nWY2WqlaAWXOW2MiNdqJf0DC8l4mcBQAoqvYMNvu5BqqaVWnx3iOvBQy+3o6cTw58\neK5J21C/0qilMDH3+ASpot16\n-----END PRIVATE KEY-----\n",
-  "client_email": "firebase-adminsdk-fbsvc@iot-script.iam.gserviceaccount.com",
-  "client_id": "116790051579104997219",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40iot-script.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
-}),
+    type: "service_account",
+    project_id: "iot-script",
+    private_key_id: "e1b0d709030fad12a8570ee102b76cca4ada1afb",
+    private_key:
+      "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCeN6ExjGKswiau\nR90tcqPZHTWfd3WUcwJutmLnA2EbDrKLhZeD0bGQfb41SHhl+K9Uyk3opTEygssD\nIP3kdkq/F3BlokUBzV5vRDGouJXpdEwkQj5ibaATP1BmF4k6hxvq4veo8tK18NTm\nMUPYGXQv9SeLUFWnoyvzGum1S13rXygcO0/OGFMcP/Odp6DW5NC+J/n6h5tWyCvi\nl0eqUqWC09BQ1nRURCNObGMd/btPLchTk2W3sKEuFXnnoaS8EEpK4YBvZS+qpGEV\n6azANqdj4Cy0tZEobtLATcIpJI0ehiZPxBdbVT8aekEk+DUOTTJD0HxDp0vXBLvk\nSAutNe9XAgMBAAECggEAHc2KzqOMHtC/qoqc7ievF4G6DRzaiCkV5zbx8GQhkZA2\nL7Ptc4Y3dWlKQA0zqLmshUNKY61iVApxJVi8mqFxuQc4Q9zKNOmzhTAKTqbejkg6\n44Wa7L2LrrR5d5GtZtn2d0tjrW54JI+F+wqCph09Vp9OYJ60U8yXxcZnCaB1w5Uw\nB09dMrO2oZcSxOkwGng/ELdXrQWxqcccPE+6h0p92sj+rqgP85IRwQuJIeYHKNc9\nX3LhUUQkUHdILIxl/A8DPKz4gemdDNI82XPOnnEAq0E1S/hD2UZTdRSQOYpWHotQ\nUIslzUGEwN2KWHIFr5+BwMUN+CyYrPVzaxKlkcddmQKBgQDbK2xbfMME0tbizhAa\nJksLpZSovU2M88TC1shjNOiPEVMo4HI3N+Yu1ICL0l//lRE1jlG2qDF+7/Tavh+W\nAb5EuV4R2CWfLIMKZLYVvDC6h94ygoh26hoqPGr4XEGQdy0FycoJXRGNQ85bhqQW\nup+3wfEniUJv78RjSM6qCuiyjQKBgQC4zhDIxLIeS3LjOyK2qXW3uKhgziFYE6gv\n+AFEKP9kXihttsyoiWxW/vxIKJvIZm3RJ4D/yYUdYKnDjzDsO4NJfS/LmWxWMQtX\n5sB/TtnAubYGx536gSRjQ/Pue3C2K68AofEMLkOnK/UNnubPbe1HZ79hZMzRQO/W\nM4nKuJMicwKBgQDSoAqEaYPpsM2+LZYf60kXqksRVsued+5R6KOvY3tTcqzejcR1\n+IyH2MSomsaTEqj1NQ6mYUEf4m8HgMtOF+LInPQgZf7R168fX+X1QWP6/vO0yulm\njlgS2vlaMR75PO7RrzkwgnaJse4w21X6WeOAbyvYePqWJHAxkhi6Jb23SQKBgD3b\nO2L382aQenP0ZzocnnpQJIvCcwa4DaOAr2vRDSrbGU0f0oDW/pxf3LGKZho9rqRD\nRLpZCWU75Za/ZvCrOtZuQIE1aT2wTMuvQN9b1SbdAkBisE4Yy8UuCYfZaXCQTpM3\noScilSJvZCaa+UaU1McBwt0mkCe6RIy903E3NohhAoGAMxqoBoitkdivLn7NTZBW\nxOzx5/Ima5VV1g7hft5UZUREYykocchANKE06HWCdyaLuGknlyzCrPmOeg693Xbv\nKt3v7fFype/0bTVuTwCjL4wC7bmy46TL+kbOGGNfIi1qFtr2VMcsaOKnCPjuVuav\nPasdyi1w2s2PSdQa5OborcM=\n-----END PRIVATE KEY-----\n",
+    client_email: "firebase-adminsdk-fbsvc@iot-script.iam.gserviceaccount.com",
+    client_id: "116790051579104997219",
+    auth_uri: "https://accounts.google.com/o/oauth2/auth",
+    token_uri: "https://oauth2.googleapis.com/token",
+    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
+    client_x509_cert_url:
+      "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40iot-script.iam.gserviceaccount.com",
+    universe_domain: "googleapis.com",
+  }),
   databaseURL: "https://iot-script-default-rtdb.firebaseio.com",
 });
 
@@ -93,7 +94,11 @@ app.get("/export/sensor", async (req, res) => {
       const text = data
         .map(
           (d) =>
-            `Waktu: ${new Date(Number(d.timestamp)).toLocaleString("id-ID")} | Kelembapan: ${d.soil} | Suhu: ${d.temp} | Humidity: ${d.humidity} | Jarak: ${d.distance} | Pompa: ${d.pump}`
+            `Waktu: ${new Date(Number(d.timestamp)).toLocaleString(
+              "id-ID"
+            )} | Kelembapan: ${d.soil} | Suhu: ${d.temp} | Humidity: ${
+              d.humidity
+            } | Jarak: ${d.distance} | Pompa: ${d.pump}`
         )
         .join("\n");
       res.setHeader(
@@ -219,7 +224,9 @@ app.post("/chat", async (req, res) => {
 
       const suggestions = plantRes.data?.suggestions?.[0];
       if (suggestions) {
-        plantDescription = `Tanaman kemungkinan adalah *${suggestions.plant_name}* (${
+        plantDescription = `Tanaman kemungkinan adalah *${
+          suggestions.plant_name
+        }* (${
           suggestions.plant_details?.common_names?.join(", ") ||
           "nama umum tidak tersedia"
         }). Deskripsi: ${
@@ -261,7 +268,8 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
         messages: [
           {
             role: "system",
-            content: "Kamu adalah tanaman AI yang bisa berbicara dengan manusia.",
+            content:
+              "Kamu adalah tanaman AI yang bisa berbicara dengan manusia.",
           },
           { role: "user", content: prompt },
         ],
