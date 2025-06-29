@@ -184,74 +184,87 @@ async function uploadToImgur(base64) {
 // Chat AI utama
 app.post("/chat", async (req, res) => {
   const { userId, message, imageBase64 } = req.body;
+  console.log("📩 Request masuk:", { userId, message, imageBase64: !!imageBase64 });
 
   try {
+    // Ambil data sensor
     const snapshot = await db.ref("/realtime").once("value");
-    const data = snapshot.val();
+    const data = snapshot.val() || {};
+    console.log("📊 Sensor data:", data);
 
-    const weatherRes = await axios.get(
-      `https://www.meteosource.com/api/v1/free/point?place_id=jakarta&sections=current&timezone=auto&language=en&units=metric&key=${METEOSOURCE_API_KEY}`
-    );
-    const weather = weatherRes.data?.current;
+    // Ambil data cuaca
+    let weather = {};
+    try {
+      const weatherRes = await axios.get(
+        `https://www.meteosource.com/api/v1/free/point?place_id=jakarta&sections=current&timezone=auto&language=en&units=metric&key=${METEOSOURCE_API_KEY}`
+      );
+      weather = weatherRes.data?.current || {};
+    } catch (err) {
+      console.warn("⚠️ Gagal ambil cuaca:", err?.response?.data || err.message);
+    }
 
+    // Identifikasi tanaman jika ada gambar
     let plantDescription = "(Tidak ada gambar dikirim)";
     let imageUrl = null;
 
     if (imageBase64) {
-      imageUrl = await uploadToImgur(imageBase64);
+      try {
+        imageUrl = await uploadToImgur(imageBase64);
+        console.log("✅ Imgur URL:", imageUrl);
 
-      const plantRes = await axios.post(
-        "https://api.plant.id/v2/identify",
-        {
-          images: [imageBase64],
-          organs: ["leaf"],
-          modifiers: ["similar_images"],
-          plant_language: "en",
-          plant_details: [
-            "common_names",
-            "url",
-            "name_authority",
-            "wiki_description",
-          ],
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-            "Api-Key": PLANT_ID_API_KEY,
+        const plantRes = await axios.post(
+          "https://api.plant.id/v2/identify",
+          {
+            images: [imageBase64],
+            organs: ["leaf"],
+            modifiers: ["similar_images"],
+            plant_language: "en",
+            plant_details: [
+              "common_names",
+              "url",
+              "name_authority",
+              "wiki_description",
+            ],
           },
-        }
-      );
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "Api-Key": PLANT_ID_API_KEY,
+            },
+          }
+        );
 
-      const suggestions = plantRes.data?.suggestions?.[0];
-      if (suggestions) {
-        plantDescription = `Tanaman kemungkinan adalah *${
-          suggestions.plant_name
-        }* (${
-          suggestions.plant_details?.common_names?.join(", ") ||
-          "nama umum tidak tersedia"
-        }). Deskripsi: ${
-          suggestions.plant_details?.wiki_description?.value ||
-          "tidak ditemukan."
-        }`;
-      } else {
-        plantDescription = "Gambar dikirim, tapi tanaman tidak bisa dikenali.";
+        const suggestion = plantRes.data?.suggestions?.[0];
+        if (suggestion) {
+          plantDescription = `Tanaman kemungkinan adalah *${suggestion.plant_name}* (${
+            suggestion.plant_details?.common_names?.join(", ") || "nama umum tidak tersedia"
+          }). Deskripsi: ${
+            suggestion.plant_details?.wiki_description?.value || "tidak ditemukan."
+          }`;
+        } else {
+          plantDescription = "Gambar dikirim, tapi tanaman tidak bisa dikenali.";
+        }
+      } catch (err) {
+        console.warn("⚠️ Gagal identifikasi tanaman:", err?.response?.data || err.message);
+        plantDescription = "Gagal mengidentifikasi gambar tanaman.";
       }
     }
 
+    // Prompt AI
     const prompt = `
 Kamu adalah tanaman AI yang ramah dan cerdas. Kamu bisa merasakan data dari lingkungan sekitarmu dan mendeteksi kondisi tubuhmu berdasarkan sensor, cuaca, dan pengenalan gambar tanaman.
 
 📍 Data Sensor:
-- Kelembapan tanah: ${data?.soil}
-- Suhu tanah: ${data?.temp} °C
-- Kelembapan udara: ${data?.humidity} %
-- Jarak air: ${data?.distance} cm
-- Status pompa: ${data?.pump}
+- Kelembapan tanah: ${data?.soil ?? "-"}
+- Suhu tanah: ${data?.temp ?? "-"} °C
+- Kelembapan udara: ${data?.humidity ?? "-"} %
+- Jarak air: ${data?.distance ?? "-"} cm
+- Status pompa: ${data?.pump ?? "-"}
 
 🌤 Cuaca Saat Ini (Jakarta):
-- Cuaca: ${weather?.summary}
-- Suhu: ${weather?.temperature} °C
-- Angin: ${weather?.wind?.speed} m/s
+- Cuaca: ${weather?.summary ?? "-"}
+- Suhu: ${weather?.temperature ?? "-"} °C
+- Angin: ${weather?.wind?.speed ?? "-"} m/s
 
 🖼 Hasil identifikasi gambar: ${plantDescription}
 ${imageUrl ? `Gambar: ${imageUrl}` : ""}
@@ -261,6 +274,7 @@ ${imageUrl ? `Gambar: ${imageUrl}` : ""}
 Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta menyenangkan.
 `;
 
+    // Call OpenRouter
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
@@ -268,8 +282,7 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
         messages: [
           {
             role: "system",
-            content:
-              "Kamu adalah tanaman AI yang bisa berbicara dengan manusia.",
+            content: "Kamu adalah tanaman AI yang bisa berbicara dengan manusia.",
           },
           { role: "user", content: prompt },
         ],
@@ -282,7 +295,13 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
       }
     );
 
-    const aiReply = response.data.choices[0].message.content;
+    const choices = response.data?.choices;
+    if (!choices || !choices[0]?.message?.content) {
+      throw new Error("Tidak ada respons dari model AI.");
+    }
+
+    const aiReply = choices[0].message.content;
+    console.log("🤖 Balasan AI:", aiReply);
 
     await saveChat(
       userId,
@@ -293,8 +312,11 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
 
     res.json({ reply: aiReply });
   } catch (error) {
-    console.error("❌ Chat error:", error.response?.data || error.message);
-    res.status(500).json({ error: "Gagal memproses pesan AI." });
+    console.error("❌ Chat error:", error?.response?.data || error.message);
+    res.status(500).json({
+      error: "Gagal memproses pesan AI.",
+      detail: error?.response?.data || error.message,
+    });
   }
 });
 
