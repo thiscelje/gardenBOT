@@ -38,9 +38,9 @@ admin.initializeApp({
 const db = admin.database();
 
 const OPENROUTER_API_KEY =
-  "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";
+  "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";
 const METEOSOURCE_API_KEY = "6onlunjlfje5w8ktec3pdce82tm9ldhhoysvfz4y";
-const PLANT_ID_API_KEY = "J0wocHH3z8aC0odiQqpEMAPYIdX1JHsL75Bc0gAaPPQpoaMFFJ";
+const PLANT_ID_API_KEY = "uOJZIIeQFn5LmINNQEYyRtqdvlXQw8Trij9vVCE5wSEiXcKizN";
 const IMGUR_CLIENT_ID = "8c94fe93a60ae08";
 
 // Simpan riwayat chat ke Firebase
