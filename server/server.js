@@ -182,6 +182,10 @@ async function uploadToImgur(base64) {
 
 // Chat AI utama
 app.post("/chat", async (req, res) => {
+  console.log("🔑 OPENROUTER_API_KEY:", OPENROUTER_API_KEY);
+  if (!OPENROUTER_API_KEY) {
+  return res.status(500).json({ error: "API key OpenRouter tidak ditemukan" });
+}
   const { userId, message, imageBase64 } = req.body;
   console.log("📩 Request masuk:", {
     userId,
