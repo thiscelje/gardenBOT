@@ -43,7 +43,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Muat riwayat chat saat halaman dibuka
   const chatWindow = document.querySelector(".chat-window");
   try {
-    const res = await fetch("http://localhost:3000/history?userId=husen");
+    const res = await fetch(
+      "https://gardenbot-production-b588.up.railway.app/history?userId=husen"
+    );
     const history = await res.json();
     history.forEach((msg) => {
       const time = new Date().toLocaleTimeString("id-ID", {
@@ -142,15 +144,18 @@ input.addEventListener("keydown", async (e) => {
     chatWindow.scrollTop = chatWindow.scrollHeight;
 
     try {
-      const response = await fetch("http://localhost:3000/chat", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          userId: "husen",
-          message: userMsg,
-          imageBase64: uploadedImageBase64,
-        }),
-      });
+      const response = await fetch(
+        "https://gardenbot-production-b588.up.railway.app/chat",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            userId: "husen",
+            message: userMsg,
+            imageBase64: uploadedImageBase64,
+          }),
+        }
+      );
 
       const data = await response.json();
       document.querySelector(".chat-message.typing").remove();
@@ -192,7 +197,9 @@ input.addEventListener("keydown", async (e) => {
 let currentChart = null;
 async function renderSensorChart() {
   try {
-    const res = await fetch("http://localhost:3000/sensor/history");
+    const res = await fetch(
+      "https://gardenbot-production-b588.up.railway.app/sensor/history"
+    );
     const sensorData = await res.json();
 
     const labels = sensorData.map((d, i) => `#${i + 1}`);
@@ -270,7 +277,7 @@ document.getElementById("delete-chat").addEventListener("click", async () => {
 
   try {
     const res = await fetch(
-      "http://localhost:3000/history/reset?userId=husen",
+      "https://gardenbot-production-b588.up.railway.app/history/reset?userId=husen",
       {
         method: "DELETE",
       }
@@ -298,21 +305,21 @@ function downloadFile(url, filename) {
 }
 
 document.getElementById("export-chat-json").addEventListener("click", () => {
-  const url = `http://localhost:3000/export/history?userId=husen`;
+  const url = `https://gardenbot-production-b588.up.railway.app/export/history?userId=husen`;
   downloadFile(url, "chat-history.json");
 });
 
 document.getElementById("export-chat-txt").addEventListener("click", () => {
-  const url = `http://localhost:3000/export/history?userId=husen&format=txt`;
+  const url = `https://gardenbot-production-b588.up.railway.app/export/history?userId=husen&format=txt`;
   downloadFile(url, "chat-history.txt");
 });
 
 document.getElementById("export-sensor-json").addEventListener("click", () => {
-  const url = `http://localhost:3000/export/sensor`;
+  const url = `https://gardenbot-production-b588.up.railway.app/export/sensor`;
   downloadFile(url, "sensor-data.json");
 });
 
 document.getElementById("export-sensor-txt").addEventListener("click", () => {
-  const url = `http://localhost:3000/export/sensor?format=txt`;
+  const url = `https://gardenbot-production-b588.up.railway.app/export/sensor?format=txt`;
   downloadFile(url, "sensor-data.txt");
 });

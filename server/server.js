@@ -298,6 +298,10 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
   }
 });
 
+app.get("/", (req, res) => {
+  res.send("🌱 GardenBot API is running!");
+});
+
 // Jalankan server
 app.listen(PORT, () => {
   console.log(`✅ Server berjalan di http://localhost:${PORT}`);
