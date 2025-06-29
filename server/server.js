@@ -37,7 +37,7 @@ admin.initializeApp({
 
 const db = admin.database();
 
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
 const METEOSOURCE_API_KEY = "i5jbkyzkmmz98tom68eoanhaufvdl09xiootwh7l";
 const PLANT_ID_API_KEY = "uOJZIIeQFn5LmINNQEYyRtqdvlXQw8Trij9vVCE5wSEiXcKizN";
 const IMGUR_CLIENT_ID = "8c94fe93a60ae08";
