@@ -1,5 +1,6 @@
-require("dotenv").config();
-
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 const express = require("express");
 const bodyParser = require("body-parser");
@@ -39,7 +40,9 @@ admin.initializeApp({
 
 const db = admin.database();
 
-const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY || "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"; // fallback untuk debug lokal
+const OPENROUTER_API_KEY =
+  process.env.OPENROUTER_API_KEY ||
+  "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"; // fallback untuk debug lokal
 const METEOSOURCE_API_KEY = "yij0lyx50eawvv0xmhlvnlyhwkpqcrts5ba10eu0";
 const PLANT_ID_API_KEY = "uOJZIIeQFn5LmINNQEYyRtqdvlXQw8Trij9vVCE5wSEiXcKizN";
 const IMGUR_CLIENT_ID = "8c94fe93a60ae08";
@@ -187,9 +190,13 @@ async function uploadToImgur(base64) {
 // Chat AI utama
 app.post("/chat", async (req, res) => {
   console.log("🔑 OPENROUTER_API_KEY:", OPENROUTER_API_KEY);
+  console.log("🌍 NODE_ENV:", process.env.NODE_ENV);
+
   if (!OPENROUTER_API_KEY) {
-  return res.status(500).json({ error: "API key OpenRouter tidak ditemukan" });
-}
+    return res
+      .status(500)
+      .json({ error: "API key OpenRouter tidak ditemukan" });
+  }
   const { userId, message, imageBase64 } = req.body;
   console.log("📩 Request masuk:", {
     userId,
