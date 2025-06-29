@@ -18,30 +18,27 @@ app.use(express.static(path.join(__dirname, "../public")));
 
 admin.initializeApp({
   credential: admin.credential.cert({
-    type: "service_account",
-    project_id: "iot-script",
-    private_key_id: "e1b0d709030fad12a8570ee102b76cca4ada1afb",
-    private_key:
-      "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCeN6ExjGKswiau\nR90tcqPZHTWfd3WUcwJutmLnA2EbDrKLhZeD0bGQfb41SHhl+K9Uyk3opTEygssD\nIP3kdkq/F3BlokUBzV5vRDGouJXpdEwkQj5ibaATP1BmF4k6hxvq4veo8tK18NTm\nMUPYGXQv9SeLUFWnoyvzGum1S13rXygcO0/OGFMcP/Odp6DW5NC+J/n6h5tWyCvi\nl0eqUqWC09BQ1nRURCNObGMd/btPLchTk2W3sKEuFXnnoaS8EEpK4YBvZS+qpGEV\n6azANqdj4Cy0tZEobtLATcIpJI0ehiZPxBdbVT8aekEk+DUOTTJD0HxDp0vXBLvk\nSAutNe9XAgMBAAECggEAHc2KzqOMHtC/qoqc7ievF4G6DRzaiCkV5zbx8GQhkZA2\nL7Ptc4Y3dWlKQA0zqLmshUNKY61iVApxJVi8mqFxuQc4Q9zKNOmzhTAKTqbejkg6\n44Wa7L2LrrR5d5GtZtn2d0tjrW54JI+F+wqCph09Vp9OYJ60U8yXxcZnCaB1w5Uw\nB09dMrO2oZcSxOkwGng/ELdXrQWxqcccPE+6h0p92sj+rqgP85IRwQuJIeYHKNc9\nX3LhUUQkUHdILIxl/A8DPKz4gemdDNI82XPOnnEAq0E1S/hD2UZTdRSQOYpWHotQ\nUIslzUGEwN2KWHIFr5+BwMUN+CyYrPVzaxKlkcddmQKBgQDbK2xbfMME0tbizhAa\nJksLpZSovU2M88TC1shjNOiPEVMo4HI3N+Yu1ICL0l//lRE1jlG2qDF+7/Tavh+W\nAb5EuV4R2CWfLIMKZLYVvDC6h94ygoh26hoqPGr4XEGQdy0FycoJXRGNQ85bhqQW\nup+3wfEniUJv78RjSM6qCuiyjQKBgQC4zhDIxLIeS3LjOyK2qXW3uKhgziFYE6gv\n+AFEKP9kXihttsyoiWxW/vxIKJvIZm3RJ4D/yYUdYKnDjzDsO4NJfS/LmWxWMQtX\n5sB/TtnAubYGx536gSRjQ/Pue3C2K68AofEMLkOnK/UNnubPbe1HZ79hZMzRQO/W\nM4nKuJMicwKBgQDSoAqEaYPpsM2+LZYf60kXqksRVsued+5R6KOvY3tTcqzejcR1\n+IyH2MSomsaTEqj1NQ6mYUEf4m8HgMtOF+LInPQgZf7R168fX+X1QWP6/vO0yulm\njlgS2vlaMR75PO7RrzkwgnaJse4w21X6WeOAbyvYePqWJHAxkhi6Jb23SQKBgD3b\nO2L382aQenP0ZzocnnpQJIvCcwa4DaOAr2vRDSrbGU0f0oDW/pxf3LGKZho9rqRD\nRLpZCWU75Za/ZvCrOtZuQIE1aT2wTMuvQN9b1SbdAkBisE4Yy8UuCYfZaXCQTpM3\noScilSJvZCaa+UaU1McBwt0mkCe6RIy903E3NohhAoGAMxqoBoitkdivLn7NTZBW\nxOzx5/Ima5VV1g7hft5UZUREYykocchANKE06HWCdyaLuGknlyzCrPmOeg693Xbv\nKt3v7fFype/0bTVuTwCjL4wC7bmy46TL+kbOGGNfIi1qFtr2VMcsaOKnCPjuVuav\nPasdyi1w2s2PSdQa5OborcM=\n-----END PRIVATE KEY-----\n",
-    client_email: "firebase-adminsdk-fbsvc@iot-script.iam.gserviceaccount.com",
-    client_id: "116790051579104997219",
-    auth_uri: "https://accounts.google.com/o/oauth2/auth",
-    token_uri: "https://oauth2.googleapis.com/token",
-    auth_provider_x509_cert_url: "https://www.googleapis.com/oauth2/v1/certs",
-    client_x509_cert_url:
-      "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40iot-script.iam.gserviceaccount.com",
-    universe_domain: "googleapis.com",
+    type: process.env.FIREBASE_TYPE,
+    project_id: process.env.FIREBASE_PROJECT_ID,
+    private_key_id: process.env.FIREBASE_PRIVATE_KEY_ID,
+    private_key: process.env.FIREBASE_PRIVATE_KEY.replace(/\\n/g, "\n"),
+    client_email: process.env.FIREBASE_CLIENT_EMAIL,
+    client_id: process.env.FIREBASE_CLIENT_ID,
+    auth_uri: process.env.FIREBASE_AUTH_URI,
+    token_uri: process.env.FIREBASE_TOKEN_URI,
+    auth_provider_x509_cert_url:
+      process.env.FIREBASE_AUTH_PROVIDER_X509_CERT_URL,
+    client_x509_cert_url: process.env.FIREBASE_CLIENT_X509_CERT_URL,
   }),
-  databaseURL: "https://iot-script-default-rtdb.firebaseio.com",
+  databaseURL: process.env.FIREBASE_DATABASE_URL,
 });
 
 const db = admin.database();
 
-const OPENROUTER_API_KEY =
-  "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";
-const METEOSOURCE_API_KEY = "x73f7kz3mipwbo8p19m71f31up2tp1dvcbj4l5bi";
-const PLANT_ID_API_KEY = "uOJZIIeQFn5LmINNQEYyRtqdvlXQw8Trij9vVCE5wSEiXcKizN";
-const IMGUR_CLIENT_ID = "8c94fe93a60ae08";
+const OPENROUTER_API_KEY = process.env.OPENROUTER_API_KEY;
+const METEOSOURCE_API_KEY = process.env.METEOSOURCE_API_KEY;
+const PLANT_ID_API_KEY = process.env.PLANT_ID_API_KEY;
+const IMGUR_CLIENT_ID = process.env.IMGUR_CLIENT_ID;
 
 // Simpan riwayat chat ke Firebase
 async function saveChat(userId, role, message) {
@@ -325,12 +322,13 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
 
     res.json({ reply: aiReply });
   } catch (error) {
-    console.error("❌ Chat error:", {
+    console.error("🧨 Full Error:", {
+      name: error.name,
       message: error.message,
-      stack: error.stack,
+      code: error.code,
       response: error.response?.data,
-      status: error.response?.status,
     });
+
     res.status(500).json({ error: "Gagal memproses pesan AI." });
   }
 });
@@ -338,6 +336,33 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
 app.get("/", (req, res) => {
   res.send("🌱 GardenBot API is running!");
 });
+
+async function logSensor() {
+  try {
+    const snapshot = await db.ref("/realtime").once("value");
+    const data = snapshot.val();
+
+    if (!data) return;
+
+    const timestamp = Date.now();
+    await db.ref(`/sensor_log/${timestamp}`).set({
+      soil: data.soil || 0,
+      temp: data.temp || 0,
+      humidity: data.humidity || 0,
+      distance: data.distance || 0,
+      pump: data.pump || "OFF",
+    });
+
+    console.log(`📊 Sensor log disimpan: ${timestamp}`);
+  } catch (err) {
+    console.error("❌ Gagal menyimpan log sensor:", err.message);
+  }
+}
+
+// Jalankan tiap 1 detik
+setInterval(() => {
+  logSensor();
+}, 1000);
 
 // Jalankan server
 app.listen(PORT, () => {
