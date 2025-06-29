@@ -199,7 +199,7 @@ app.post("/chat", async (req, res) => {
     let weather = {};
     try {
       const weatherRes = await axios.get(
-        `https://www.meteosource.com/api/v1/free/point?place_id=jakarta&sections=current&timezone=auto&language=en&units=metric&key=${METEOSOURCE_API_KEY}`
+        `https://www.meteosource.com/api/v1/free/point?lat=6.2088&lon=106.8456&sections=current&timezone=auto&language=en&units=metric&key=${METEOSOURCE_API_KEY}`
       );
       weather = weatherRes.data?.current || {};
     } catch (err) {
