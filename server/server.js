@@ -37,7 +37,7 @@ admin.initializeApp({
 
 const db = admin.database();
 
-const OPENROUTER_API_KEY = "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";
+const OPENROUTER_API_KEY = "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";
 const METEOSOURCE_API_KEY = "i5jbkyzkmmz98tom68eoanhaufvdl09xiootwh7l";
 const PLANT_ID_API_KEY = "uOJZIIeQFn5LmINNQEYyRtqdvlXQw8Trij9vVCE5wSEiXcKizN";
 const IMGUR_CLIENT_ID = "8c94fe93a60ae08";
