@@ -42,7 +42,7 @@ const db = admin.database();
 
 const OPENROUTER_API_KEY =
   process.env.OPENROUTER_API_KEY ||
-  "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"; // fallback untuk debug lokal
+  "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"; // fallback untuk debug lokal
 const METEOSOURCE_API_KEY = "yij0lyx50eawvv0xmhlvnlyhwkpqcrts5ba10eu0";
 const PLANT_ID_API_KEY = "uOJZIIeQFn5LmINNQEYyRtqdvlXQw8Trij9vVCE5wSEiXcKizN";
 const IMGUR_CLIENT_ID = "8c94fe93a60ae08";
@@ -304,7 +304,7 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
     const response = await axios.post(
       "https://openrouter.ai/api/v1/chat/completions",
       {
-        model: "openai/gpt-3.5-turbo",
+        model: "mistralai/mistral-small-3.2-24b-instruct-2506:free",
         messages: [
           {
             role: "system",
