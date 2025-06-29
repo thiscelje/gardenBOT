@@ -156,7 +156,6 @@ input.addEventListener("keydown", async (e) => {
           }),
         }
       );
-
       const data = await response.json();
       document.querySelector(".chat-message.typing").remove();
 

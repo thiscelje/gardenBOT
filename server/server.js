@@ -184,7 +184,11 @@ async function uploadToImgur(base64) {
 // Chat AI utama
 app.post("/chat", async (req, res) => {
   const { userId, message, imageBase64 } = req.body;
-  console.log("📩 Request masuk:", { userId, message, imageBase64: !!imageBase64 });
+  console.log("📩 Request masuk:", {
+    userId,
+    message,
+    imageBase64: !!imageBase64,
+  });
 
   try {
     // Ambil data sensor
@@ -236,16 +240,24 @@ app.post("/chat", async (req, res) => {
 
         const suggestion = plantRes.data?.suggestions?.[0];
         if (suggestion) {
-          plantDescription = `Tanaman kemungkinan adalah *${suggestion.plant_name}* (${
-            suggestion.plant_details?.common_names?.join(", ") || "nama umum tidak tersedia"
+          plantDescription = `Tanaman kemungkinan adalah *${
+            suggestion.plant_name
+          }* (${
+            suggestion.plant_details?.common_names?.join(", ") ||
+            "nama umum tidak tersedia"
           }). Deskripsi: ${
-            suggestion.plant_details?.wiki_description?.value || "tidak ditemukan."
+            suggestion.plant_details?.wiki_description?.value ||
+            "tidak ditemukan."
           }`;
         } else {
-          plantDescription = "Gambar dikirim, tapi tanaman tidak bisa dikenali.";
+          plantDescription =
+            "Gambar dikirim, tapi tanaman tidak bisa dikenali.";
         }
       } catch (err) {
-        console.warn("⚠️ Gagal identifikasi tanaman:", err?.response?.data || err.message);
+        console.warn(
+          "⚠️ Gagal identifikasi tanaman:",
+          err?.response?.data || err.message
+        );
         plantDescription = "Gagal mengidentifikasi gambar tanaman.";
       }
     }
@@ -282,7 +294,8 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
         messages: [
           {
             role: "system",
-            content: "Kamu adalah tanaman AI yang bisa berbicara dengan manusia.",
+            content:
+              "Kamu adalah tanaman AI yang bisa berbicara dengan manusia.",
           },
           { role: "user", content: prompt },
         ],
@@ -312,11 +325,13 @@ Balaslah sebagai tanaman yang ramah, pintar, dan menjelaskan dengan santai serta
 
     res.json({ reply: aiReply });
   } catch (error) {
-    console.error("❌ Chat error:", error?.response?.data || error.message);
-    res.status(500).json({
-      error: "Gagal memproses pesan AI.",
-      detail: error?.response?.data || error.message,
+    console.error("❌ Chat error:", {
+      message: error.message,
+      stack: error.stack,
+      response: error.response?.data,
+      status: error.response?.status,
     });
+    res.status(500).json({ error: "Gagal memproses pesan AI." });
   }
 });
 
